@@ -1,5 +1,5 @@
 // Base configuration for your FastAPI backend
-const API_BASE_URL = "https://swiftbill-backend-3t3u.onrender.com";
+const API_BASE_URL = "https://swiftbill-backend-3t3u.onrender.com/api/v1";
 
 /**
  * Universal wrapper for backend API requests using fetch
