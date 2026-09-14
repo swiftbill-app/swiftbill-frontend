@@ -1,0 +1,136 @@
+@import "./variables.css";
+@import "./components.css";
+
+/* Reset & Layout Rules */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.5rem 1rem;
+}
+
+/* Header & Typography */
+.brand-header {
+  width: 100%;
+  max-width: 28rem;
+  margin: 0 auto 1.5rem auto;
+}
+
+.brand-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.brand-logo {
+  background-color: var(--primary-green);
+  color: var(--text-white);
+  font-weight: 700;
+  font-size: 0.575rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: var(--radius-md);
+}
+
+.brand-title {
+  font-family: var(--font-serif);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.brand-tagline {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-left: 0.25rem;
+}
+
+/* Main Auth Section */
+.auth-container {
+  max-width: 28rem;
+  width: 100%;
+  margin: auto;
+  padding: 1.5rem 0;
+}
+
+/* Tab Switcher Container */
+.tab-switcher {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.25rem;
+  background-color: rgba(226, 232, 240, 0.6);
+  border-radius: var(--radius-lg);
+  margin-bottom: 1.5rem;
+}
+
+.tab-btn {
+  width: 50%;
+  padding: 0.5rem 0;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.875rem;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  color: var(--gray-500);
+  transition: all 0.2s ease;
+}
+
+.tab-btn:hover:not(.active) {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.tab-btn.active {
+  background-color: var(--slate-900);
+  color: var(--text-white);
+}
+
+/* Grid Layout Utilities */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.space-y-3 > * + * {
+  margin-top: 0.75rem;
+}
+
+.space-y-4 > * + * {
+  margin-top: 1rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.hidden {
+  display: none !important;
+}
+
+footer {
+  /* position: fixed; */
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  padding: 1rem 0;
+  /* padding-top: 4rem; */
+}

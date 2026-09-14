@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SwiftBill - Client Dashboard</title>
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="dashboard-nav">
+    <div class="brand-wrapper">
+      <div class="brand-logo">SB</div>
+      <span class="brand-title">SwiftBill</span>
+    </div>
+
+    
+    <div class="user-badge">
+      <div class="avatar-circle" id="userAvatar">U</div>
+      <div class="text-sm">
+        <div class="font-semibold" id="clientName">Client Account</div>
+        <div class="form-subtitle" id="clientUsername">@username</div>
+      </div>
+      <button type="button" id="logoutBtn" class="btn-outline text-sm" style="padding: 0.4rem 0.85rem; margin-left: 0.5rem;">
+        Log out
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Content Area -->
+  <main class="dashboard-container">
+
+    <!-- Stat Highlights -->
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-label">Wallet Balance</div>
+        <div class="metric-value" id="walletBalance">₵0.00</div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-label">Account Status</div>
+        <div style="margin-top: 0.5rem;">
+          <span class="badge badge-success" id="accountStatusBadge">APPROVED</span>
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-label">Quick Actions</div>
+        <div class="grid-2" style="margin-top: 0.5rem;">
+          <button type="button" id="topUpBtn" class="btn-green text-sm" style="padding: 0.4rem 0;">Top Up</button>
+          <button type="button" id="payBillBtn" class="btn-outline text-sm" style="padding: 0.4rem 0;">Pay Bill</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Activity Table -->
+    <div class="card-container" style="padding: 1.25rem;">
+      <h3 class="form-title" style="font-size: 1.125rem; margin-bottom: 1rem;">Recent Transactions</h3>
+
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Description</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="transactionTable">
+            <tr>
+              <td colspan="5" class="text-center" style="padding: 1.5rem; color: var(--text-muted);">
+                Loading transactions...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Deposit / Top Up Modal -->
+  <div id="depositModal" class="modal-backdrop hidden">
+    <div class="modal-card space-y-4">
+
+      <form id="depositForm" class="space-y-3">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <h3 class="form-title" style="font-size: 1.125rem;">Top Up Wallet</h3>
+        </div>
+        <p class="form-subtitle">Fund your wallet via Mobile Money.</p>
+
+        <div id="depositError" class="alert-error hidden"></div>
+
+        <div>
+          <label class="form-label" for="depositAmount">Amount (₵)</label>
+          <input type="number" id="depositAmount" min="1" max="10000" step="0.01" placeholder="e.g. 50.00" class="form-input" required>
+        </div>
+
+        <div>
+          <label class="form-label" for="depositMethod">Payment Method</label>
+          <select id="depositMethod" class="form-input" required>
+            <option value="Mobile Money">Mobile Money</option>
+            <option value="PayPal">PayPal</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="form-label" for="depositPhone">Phone Number</label>
+          <input type="tel" id="depositPhone" placeholder="024 000 0000" class="form-input" required>
+        </div>
+
+        <div class="grid-2" style="padding-top: 0.5rem;">
+          <button type="button" id="closeDepositBtn" class="btn-outline text-sm" style="padding: 0.5rem 0;">Cancel</button>
+          <button type="submit" class="btn-green text-sm" style="padding: 0.5rem 0;">Continue</button>
+        </div>
+      </form>
+
+      <div id="depositConfirmView" class="space-y-4 hidden">
+        <h3 class="form-title" style="font-size: 1.125rem;">Confirm Deposit</h3>
+        <div class="status-box">
+          <div>Method: <strong id="confirmMethod"></strong></div>
+          <div>Phone: <strong id="confirmPhone"></strong></div>
+          <div>Amount: <strong id="confirmAmount"></strong></div>
+        </div>
+        <div class="grid-2">
+          <button type="button" id="backDepositBtn" class="btn-outline text-sm" style="padding: 0.5rem 0;">Back</button>
+          <button type="button" id="executeDepositBtn" class="btn-green text-sm" style="padding: 0.5rem 0;">Confirm & Pay</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Pay Bill Modal -->
+  <div id="payBillModal" class="modal-backdrop hidden">
+    <div class="modal-card space-y-4">
+      <form id="payBillForm" class="space-y-3">
+        <h3 class="form-title" style="font-size: 1.125rem;">Pay a Bill</h3>
+        <p class="form-subtitle">Pay directly from your wallet balance.</p>
+
+        <div id="payBillError" class="alert-error hidden"></div>
+
+        <div>
+          <label class="form-label" for="billCategory">Biller</label>
+          <select id="billCategory" class="form-input" required>
+            <option value="Electricity">Electricity (ECG)</option>
+            <option value="Water">Water (GWCL)</option>
+            <option value="DSTv / TV">DSTv / TV</option>
+            <option value="Internet">Internet</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="form-label" for="billAccountRef">Meter / Account Number</label>
+          <input type="text" id="billAccountRef" placeholder="e.g. 12345678" class="form-input" required>
+        </div>
+
+        <div>
+          <label class="form-label" for="billAmount">Amount (₵)</label>
+          <input type="number" id="billAmount" min="1" step="0.01" placeholder="e.g. 50.00" class="form-input" required>
+        </div>
+
+        <div class="grid-2" style="padding-top: 0.5rem;">
+          <button type="button" id="closePayBillBtn" class="btn-outline text-sm" style="padding: 0.5rem 0;">Cancel</button>
+          <button type="submit" class="btn-green text-sm" style="padding: 0.5rem 0;">Pay Bill</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2026 SwiftBill. All rights reserved.
+  </footer>
+
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/client.js"></script>
+  <script src="../assets/js/dashboard.js"></script>
+</body>
+</html>

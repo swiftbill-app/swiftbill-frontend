@@ -1,0 +1,35 @@
+:root {
+  --bg-primary: #f8fafc;
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --border-card: rgba(226, 232, 240, 0.8);
+
+  --text-primary: #0f172a;
+  --text-muted: #64748b;
+  --text-white: #ffffff;
+
+  --primary-green: #065f46;
+  --primary-green-hover: #044e38;
+  --primary-green-light: #d1fae5;
+  --primary-green-text: #064e3b;
+
+  --slate-900: #0f172a;
+  --slate-800: #1e293b;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-300: #cbd5e1;
+  --gray-500: #64748b;
+
+  --yellow-bg: #fef9c3;
+  --yellow-text: #854d0e;
+  --yellow-dot: #eab308;
+  --red-bg: #fee2e2;
+  --red-text: #991b1b;
+
+  --font-serif: Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  --glass-backdrop: blur(12px);
+  --shadow-card: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  --radius-lg: 0.75rem;
+  --radius-md: 0.5rem;
+}

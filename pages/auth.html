@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SwiftBill - Authentication</title>
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body class="page-wrapper">
+
+  <!-- Header -->
+  <header class="brand-header">
+    <div class="brand-wrapper">
+      <div class="brand-logo">SB</div>
+      <span class="brand-title">SwiftBill</span>
+      <span class="brand-tagline">pay utilities, simply</span>
+    </div>
+  </header>
+
+  <!-- Auth Card Container -->
+  <main class="auth-container">
+
+    <!-- Tab Switcher -->
+    <div class="tab-switcher">
+      <button type="button" id="tabLoginBtn" class="tab-btn active">
+        Log in
+      </button>
+      <button type="button" id="tabRegisterBtn" class="tab-btn">
+        Create account
+      </button>
+    </div>
+
+    <div class="card-container">
+      
+      <!-- Dynamic Error / Success Alert -->
+      <div id="authAlert" class="hidden"></div>
+
+      <!-- ================= LOGIN FORM ================= -->
+      <section id="loginSection" class="space-y-4">
+        <div>
+          <h2 class="form-title">Welcome back</h2>
+          <p class="form-subtitle">Log in to pay bills and top up your wallet.</p>
+        </div>
+
+        <form id="loginForm" class="space-y-4">
+          <div>
+            <label class="form-label" for="loginUsername">Username</label>
+            <input type="text" id="loginUsername" placeholder="Enter your username" class="form-input" required>
+          </div>
+
+          <div>
+            <label class="form-label" for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" placeholder="Enter your password" class="form-input" required>
+          </div>
+
+          <div class="form-row">
+            <span class="form-row-left">
+              <input type="checkbox" name="rememberMe" id="rememberMe">
+              <label for="rememberMe">Remember me</label>
+            </span>
+            <span class="form-row-right">
+              <a href="reset-password.html">Forgot password?</a>
+            </span>
+          </div>
+
+          <button type="submit" class="btn-green btn-full text-sm">Log in</button>
+
+        </form>
+      </section>
+
+      <!-- ================= REGISTER FORM ================= -->
+      <section id="registerSection" class="space-y-4 hidden">
+        <div>
+          <h2 class="form-title">Create your account</h2>
+          <p class="form-subtitle">An admin needs to approve your account before you can pay bills.</p>
+        </div>
+
+        <form id="registerForm" class="space-y-3">
+          <div>
+            <label class="form-label" for="regFullName">Full name</label>
+            <input type="text" id="regFullName" placeholder="Enter your full name" class="form-input" required>
+          </div>
+
+          <div>
+            <label class="form-label" for="regUsername">Username</label>
+            <input type="text" id="regUsername" placeholder="Enter a username" class="form-input" required>
+          </div>
+
+          <div class="grid-2">
+            <div>
+              <label class="form-label" for="regPhone">Phone number</label>
+              <input type="text" id="regPhone" placeholder="024 000 0000" class="form-input" maxlength="12" inputmode="numeric" pattern="[0-9]{3}\s[0-9]{3}\s[0-9]{4}" autocomplete="off" required>
+            </div>
+            <div>
+              <label class="form-label" for="regEmail">Email</label>
+              <input type="email" id="regEmail" placeholder="you@email.com" class="form-input" required>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div>
+              <label class="form-label" for="regPassword">Password</label>
+              <input type="password" id="regPassword" placeholder="Enter a password" class="form-input" required>
+            </div>
+            <div>
+              <label class="form-label" for="regConfirmPassword">Confirm password</label>
+              <input type="password" id="regConfirmPassword" placeholder="Repeat password" class="form-input" required>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-green btn-full text-sm">Submit for approval</button>
+        </form>
+      </section>
+
+      <!-- ================= ACCOUNT SUBMITTED VIEW ================= -->
+      <section id="submittedSection" class="submitted-card space-y-4" hidden>
+        <div class="success-icon-circle">✓</div>
+        <div>
+          <h2 class="form-title">Account submitted!</h2>
+          <p class="form-subtitle">
+            Your registration details have been received. An administrator will review and approve your account shortly.
+          </p>
+        </div>
+        <div class="status-box">
+          <div style="color: var(--text-muted);">Account status:</div>
+          <div class="status-badge-pending">
+            <span class="dot-indicator"></span>
+            Pending Admin Approval
+          </div>
+        </div>
+        <button type="button" id="backToLoginBtn" class="btn-outline btn-full text-sm">
+          Return to log in
+        </button>
+      </section>
+
+      <!-- Admin Modal Toggle Link -->
+      <div class="bottom-link text-center">
+        <button type="button" id="adminToggleBtn" class="link-btn">Admin log in &rarr;</button>
+      </div>
+
+    </div>
+
+    <!-- Modal for Admin Passcode Login -->
+    <div id="adminModal" class="modal-backdrop hidden">
+      <div class="modal-card space-y-4">
+        <div>
+          <h3 class="form-title" style="font-size: 1.125rem;">Admin Portal</h3>
+          <p class="form-subtitle">Enter administrative passcode to view dashboard management.</p>
+        </div>
+        
+        <form id="adminLoginForm" class="space-y-3">
+          <div>
+            <label class="form-label" for="adminPasscode">Admin Passcode</label>
+            <input type="password" id="adminPasscode" placeholder="••••••••" class="form-input" required>
+          </div>
+          <div class="grid-2" style="padding-top: 0.5rem;">
+            <button type="button" id="closeAdminModalBtn" class="btn-outline text-sm" style="padding: 0.5rem 0;">Cancel</button>
+            <button type="submit" class="btn-green text-sm" style="padding: 0.5rem 0;">Access Panel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal" class="modal hidden">
+      <div class="modal-content">
+        <h3>Reset Password</h3>
+        <p>Choose where to receive your reset link or code:</p>
+
+        <form id="forgotPasswordForm">
+          <div class="form-group">
+            <label>Username, Email, or Phone</label>
+            <input type="text" id="forgotIdentifier" class="form-input" required />
+          </div>
+
+          <div class="form-group radio-group">
+            <label><input type="radio" name="resetMethod" value="email" checked /> Email</label>
+            <label><input type="radio" name="resetMethod" value="sms" /> SMS</label>
+          </div>
+
+          <button type="submit" class="btn-primary">Send Reset Link</button>
+          <button type="button" id="closeForgotModalBtn" class="btn-secondary">Cancel</button>
+        </form>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    &copy; 2026 SwiftBill. All rights reserved.
+  </footer>
+
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/auth.js"></script>
+</body>
+</html>
