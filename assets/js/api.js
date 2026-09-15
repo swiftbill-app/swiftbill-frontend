@@ -64,8 +64,6 @@ export async function apiRequest(endpoint, method = "GET", body = null) {
   }
 }
 
-window.apiRequest = apiRequest; 
-
 /**
  * Helper to safely logout and clear local storage credentials
  */
