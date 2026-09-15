@@ -9,7 +9,7 @@ const API_BASE_URL = "https://swiftbill-backend-3t3u.onrender.com/api/v1";
  * @returns {Promise<any>} Response JSON data
  */
 
-export async function apiRequest(endpoint, method = "GET", body = null) {
+async function apiRequest(endpoint, method = "GET", body = null) {
   // Retrieve token from storage (checks admin first, then client token)
   const token = localStorage.getItem("adminToken") || localStorage.getItem("authToken");
 
