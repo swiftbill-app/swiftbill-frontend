@@ -132,7 +132,6 @@ document.addEventListener("DOMContentLoaded", () => {
     usernameInput.value = savedUsername;
     rememberMeCheckbox.checked = true;
   }
-  debugger;
 
   if (loginForm) {
     loginForm.addEventListener("submit", async (e) => {
@@ -178,9 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
     registerForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       clearAlert();
-      
-      // debugger;
-      
+            
       const fullName = document.getElementById("regFullName").value.trim();
       const username = document.getElementById("regUsername").value.trim();
       const rawPhone = document.getElementById("regPhone").value.replace(/\s+/g, "")
