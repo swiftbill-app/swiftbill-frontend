@@ -11,22 +11,55 @@
   <!-- Navigation Bar -->
   <nav class="dashboard-nav">
     <div class="brand-wrapper">
-      <div class="brand-logo">SB</div>
-      <span class="brand-title">SwiftBill</span>
+        <div class="brand-logo">SB</div>
+        <span class="brand-title">SwiftBill</span>
     </div>
 
-    
-    <div class="user-badge">
-      <div class="avatar-circle" id="userAvatar">U</div>
-      <div class="text-sm">
-        <div class="font-semibold" id="clientName">Client Account</div>
-        <div class="form-subtitle" id="clientUsername">@username</div>
-      </div>
-      <button type="button" id="logoutBtn" class="btn-outline text-sm" style="padding: 0.4rem 0.85rem; margin-left: 0.5rem;">
-        Log out
-      </button>
+    <div class="user-dropdown-container">
+        <!-- Trigger Button -->
+        <button type="button" id="userMenuBtn" class="user-menu-trigger">
+            <div class="avatar-circle" id="userAvatar">U</div>
+            <span id="clientName" class="font-semibold">Client Account</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 9l6 6 6-6"/>
+            </svg>
+        </button>
+
+        <!-- Dropdown Menu -->
+        <div id="userDropdown" class="dropdown-menu hidden">
+            <div class="dropdown-header">
+                <div id="dropdownName" class="dropdown-name">Client Account</div>
+                <div id="dropdownUsername" class="dropdown-username">@username</div>
+            </div>
+            <button id="openProfileModalBtn" type="button" class="dropdown-item-btn">Profile</button>
+            <button id="logoutBtn" type="button" class="dropdown-item-btn logout-btn">Logout</button>
+        </div>
     </div>
   </nav>
+
+  <!-- Profile Update Modal -->
+  <div id="profileModal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="form-title">Edit Profile</h3>
+        <button id="closeProfileModalBtn" type="button" class="modal-close-btn">&times;</button>
+      </div>
+      <form id="profileForm">
+        <div class="form-group-mb">
+          <label for="editFullName" class="form-label">Full Name</label>
+          <input type="text" id="editFullName" class="form-input" required />
+        </div>
+        <div class="form-group-mb">
+          <label for="editPhone" class="form-label">Phone Number</label>
+          <input type="text" id="editPhone" class="form-input" required />
+        </div>
+        <div class="modal-footer-actions">
+          <button type="button" id="cancelProfileBtn" class="btn-outline text-sm">Cancel</button>
+          <button type="submit" class="btn-green text-sm">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- Main Content Area -->
   <main class="dashboard-container">
@@ -103,7 +136,7 @@
           <label class="form-label" for="depositMethod">Payment Method</label>
           <select id="depositMethod" class="form-input" required>
             <option value="Mobile Money">Mobile Money</option>
-            <option value="PayPal">PayPal</option>
+            <option value="Card">Card</option>
           </select>
         </div>
 

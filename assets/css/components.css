@@ -97,6 +97,11 @@
   background-color: var(--gray-100);
 }
 
+.btn-semi {
+  width: 50%;
+  padding: 0.625rem 0;
+}
+
 .btn-full {
   width: 100%;
   padding: 0.625rem 0;
@@ -245,6 +250,104 @@
   justify-content: center;
   font-weight: 700;
   font-size: 0.575rem;
+}
+
+/* User Dropdown Navigation Styles */
+.user-dropdown-container {
+  position: relative;
+  display: inline-block;
+}
+
+.user-menu-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: 0.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-md);
+  width: 200px;
+  padding: 0.5rem;
+  z-index: 1000;
+  box-shadow: var(--shadow-card);
+}
+
+.dropdown-header {
+  padding: 0.5rem;
+  border-bottom: 1px solid var(--border-card);
+  margin-bottom: 0.5rem;
+}
+
+.dropdown-name {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.dropdown-username {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.dropdown-item-btn {
+  width: 100%;
+  text-align: left;
+  padding: 0.5rem;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  border-radius: var(--radius-sm, 4px);
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-item-btn:hover {
+  background-color: var(--gray-100);
+}
+
+.dropdown-item-btn.logout-btn {
+  color: var(--red-text);
+  margin-top: 0.25rem;
+}
+
+.dropdown-item-btn.logout-btn:hover {
+  background-color: var(--red-bg);
+}
+
+/* Modal Form Specific Tweaks */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.modal-close-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.form-group-mb {
+  margin-bottom: 1rem;
+}
+
+.modal-footer-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
 }
 
 /* Dashboard Layout Grid */

@@ -10,6 +10,73 @@ document.addEventListener("DOMContentLoaded", () => {
   const backDepositBtn = document.getElementById("backDepositBtn");
   const executeDepositBtn = document.getElementById("executeDepositBtn");
 
+  const numericInput = document.getElementById("depositPhone");
+  const rawPhone = document.getElementById("regPhone").value.replace(/\s+/g, "")
+
+  const userMenuBtn = document.getElementById("userMenuBtn");
+  const userDropdown = document.getElementById("userDropdown");
+  const openProfileModalBtn = document.getElementById("openProfileModalBtn");
+  const closeProfileModalBtn = document.getElementById("closeProfileModalBtn");
+  const cancelProfileBtn = document.getElementById("cancelProfileBtn");
+  const profileModal = document.getElementById("profileModal");
+  const profileForm = document.getElementById("profileForm");
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  if (userMenuBtn && userDropdown) {
+        // Click trigger to toggle menu
+        userMenuBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            userDropdown.classList.toggle("hidden");
+        });
+
+        // Prevent clicks inside the dropdown from closing it immediately
+        userDropdown.addEventListener("click", (e) => {
+            e.stopPropagation();
+        });
+
+        // Click anywhere outside to close menu
+        document.addEventListener("click", () => {
+            userDropdown.classList.add("hidden");
+        });
+    }
+
+  // Modal Handlers
+  const openModal = () => {
+    userDropdown.classList.add("hidden");
+    profileModal.classList.remove("hidden");
+  };
+
+  const closeModal = () => {
+    profileModal.classList.add("hidden");
+  };
+
+  openProfileModalBtn?.addEventListener("click", openModal);
+  closeProfileModalBtn?.addEventListener("click", closeModal);
+  cancelProfileBtn?.addEventListener("click", closeModal);
+
+  // Profile Form Submit
+  profileForm?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const fullName = document.getElementById("editFullName").value;
+    const phone = document.getElementById("editPhone").value;
+
+    try {
+      await apiRequest("/auth/profile", "PUT", { full_name: fullName, phone_number: phone });
+      alert("Profile updated successfully!");
+      closeModal();
+      location.reload();
+    } catch (err) {
+      alert(err.message || "Failed to update profile.");
+    }
+  });
+
+  // Logout Handler
+  logoutBtn?.addEventListener("click", () => {
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("adminToken");
+    window.location.href = "/login";
+  });
+
   let pendingDepositData = null;
 
   if (openDepositBtn) {
@@ -24,6 +91,29 @@ document.addEventListener("DOMContentLoaded", () => {
   if (closeDepositBtn) {
     closeDepositBtn.addEventListener("click", () => {
       depositModal.classList.add("hidden");
+    });
+  }
+
+  if (numericInput) {
+    numericInput.addEventListener("input", (e) => {
+      let rawDigits = e.target.value.replace(/\D/g, "")
+      
+      if (rawDigits.length > 10) {
+        rawDigits = rawDigits.substring(0, 10);
+      }
+      
+      let formatted = "";
+      if (rawDigits.length > 0) {
+        formatted = rawDigits.substring(0, 3);
+      }
+      if (rawDigits.length > 3) {
+        formatted += " " + rawDigits.substring(3, 6);
+      }
+      if (rawDigits.length > 6) {
+        formatted += " " + rawDigits.substring(6, 10);
+      }
+      
+      e.target.value = formatted;
     });
   }
 
@@ -42,10 +132,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       depositError.classList.add("hidden");
-      // Fixed: backend's DepositRequest schema expects payment_method /
-      // phone_number, not method / phone — this was causing every
-      // deposit to fail with a 422 validation error.
-      pendingDepositData = { amount, phone_number: phone, payment_method: method };
+      // Fixed: backend's DepositRequest schema expects payment_method phone_number, not method / phone 
+      pendingDepositData = { amount, phone_number: rawPhone, payment_method: method };
 
       // Populate & Show Confirmation View
       document.getElementById("confirmMethod").textContent = method;
